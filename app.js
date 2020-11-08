@@ -8,8 +8,6 @@ const envs = [
   'DISCORD_TOKEN',
   'DISCORD_GUILD_ID',
   'DISCORD_SOURCE_CHANNEL_ID',
-  'GOOGLE_CLIENT_EMAIL',
-  'GOOGLE_PRIVATE_KEY'
 ];
 
 let lacksEnv = false;
@@ -28,8 +26,6 @@ const {
   DISCORD_TOKEN,
   DISCORD_GUILD_ID,
   DISCORD_SOURCE_CHANNEL_ID,
-  GOOGLE_CLIENT_EMAIL,
-  GOOGLE_PRIVATE_KEY
 } = process.env;
 
 // テキスト → ReadableStream
@@ -54,12 +50,7 @@ async function textToSpeechReadableStream(text) {
   return stream;
 }
 
-const client = new textToSpeech.TextToSpeechClient({
-  credentials: {
-    client_email: GOOGLE_CLIENT_EMAIL,
-    private_key: GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
-  }
-});
+const client = new textToSpeech.TextToSpeechClient();
 
 (async function main() {
   const discordClient = new Discord.Client({
@@ -83,7 +74,7 @@ const client = new textToSpeech.TextToSpeechClient({
 
     // ミュートの人の特定テキストチャンネルの発言だけ拾う
     if(
-      !message.member.voice.selfMute || guild.id !== DISCORD_GUILD_ID ||
+      !message.member.voice.selfMute || guild.id !== DISCORD_GUILD_ID || 
       !channel || message.channel.id !== DISCORD_SOURCE_CHANNEL_ID
     ) {
       return;
