@@ -83,7 +83,7 @@ const client = new textToSpeech.TextToSpeechClient({
 
     // ミュートの人の特定テキストチャンネルの発言だけ拾う
     if(
-      !message.member.voice.selfMute || guild.id !== DISCORD_GUILD_ID || 
+      !message.member.voice.selfMute || guild.id !== DISCORD_GUILD_ID ||
       !channel || message.channel.id !== DISCORD_SOURCE_CHANNEL_ID
     ) {
       return;
@@ -107,7 +107,7 @@ const client = new textToSpeech.TextToSpeechClient({
     const shouldMove = !currentConnection || currentConnection.channel.id !== channel.id;
     const conn = shouldMove ? await channel.join() : currentConnection;
 
-    conn.play(await textToSpeechReadableStream(text), {highWaterMark: 6, bitrate: 'auto'});
+    conn.play(await textToSpeechReadableStream(text), {type: 'ogg/opus', highWaterMark: 6, bitrate: 'auto'});
   });
 
   discordClient.once('ready', () => {

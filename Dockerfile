@@ -5,7 +5,7 @@ COPY app.js package.json package-lock.json /helmholtz/
 WORKDIR /helmholtz
 
 RUN apt update && \
-    apt install -y autoconf automake ffmpeg
+    apt install -y autoconf automake
 
 RUN npm install
 
